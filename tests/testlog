@@ -20,3 +20,12 @@ All Tests Passed
 Wed Feb 8 09:52:19 EST 2012
 ./GBM1.cpp passed
 All Tests Passed
+
+Wed Feb 8 11:13:40 EST 2012
+./GBM1.cpp failed
+./GBM2.cpp passed
+
+Wed Feb 8 11:14:05 EST 2012
+./GBM1.cpp passed
+./GBM2.cpp passed
+All Tests Passed

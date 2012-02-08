@@ -8,7 +8,7 @@ void printComplex(double complex c){
   }
 
 int main(){
-  GBM_model gbm(1,.5,0,1,1,1,1);
+  GBM_model gbm(1,.5,0,1);
   double complex val;
   val = gbm.logCF(1,1); //should give real val of ~.6065
   printComplex(val);

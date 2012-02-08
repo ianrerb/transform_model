@@ -1,30 +1,50 @@
 #include"../include/pricemodels.h"
 
-void fft_base::ComputeX(double complex X[], const double &S, const double &C, const double &offset){
-  double s = log(S);
-  double lambda = getLambda();
+void fft_base::ComputeX(double complex X[], 
+			const double &Spot,
+			const double &Strike, 
+			const double &C, 
+			const unsigned int &N, 
+			const double &alpha, 
+			const double &eta){
+  double lnK = log(Strike); //takes log of strike price
+  double lambda = getLambda(N,eta); //computes lambda
 
   for(int j = 0; j!=N; j++){
     double complex nu = j*static_cast<double complex>(N); //nu = (j-1)eta
     double complex val1 = alpha+I*nu; //denominator of C term
-    double complex temp = eta*C/(val1*(1.0+val1))*cexp(-I*(s-PI/eta))*logCF(S,nu-(alpha+1)*I); //x_j j!=0
+    double complex temp = eta*C/(val1*(1.0+val1))*cexp(-I*(lnK-PI/eta))*logCF(Spot,nu-(alpha+1)*I); //x_j j!=0
     if(j==0){ temp*=.5; }//adjustment for j = 0
     X[j]=temp;
     }
   }
 
-std::vector<double> fft_base::PutPrices(const double &S, const double &C, const double &offset){
+std::vector<Option> fft_base::PutPrices(const double &Spot,
+					const double &Strike, 
+					const double &C, 
+					const unsigned int &N, 
+					const double &alpha, 
+					const double &eta){
   double complex xvals[N];
-  printf("Computing X...\n"); 
-  fft_base::ComputeX(xvals,S,C,offset);
   double complex yvals[N];
-  fftw_plan p = fftw_plan_dft_1d(N,xvals,yvals,FFTW_FORWARD, FFTW_ESTIMATE);
-  std::vector<double> retvals;
-  printf("Computing FFT...\n"); 
+  std::vector<Option> retvals;
+  
+  double lambda = getLambda(N,eta);
+  
+  //FFT call
+  fft_base::ComputeX(xvals,Spot,Strike,C,N,alpha,eta);
+  fftw_plan p = fftw_plan_dft_1d(N,xvals,yvals,FFTW_BACKWARD, FFTW_ESTIMATE);
   fftw_execute(p);
-//  fftw_destroy_plan(p);
-  for(int i =0; i!= N; i++)
-    retvals.push_back(exp(-alpha*(log(S)-static_cast<double>(N)*getLambda()/2.0))*creal(yvals[i])/PI);
+  
+  //extract prices
+ for(int i =0; i!= N; i++){
+    double lnK = log(Strike)-lambda*(static_cast<double>(N)/2.0-static_cast<double>(i));
+    Option temp;
+    temp.strike = exp(lnK); 
+    temp.premium = exp(-alpha*lnK)*creal(yvals[i])/PI; 
+    retvals.push_back(temp);
+    }
+    
   return retvals;
   
   }

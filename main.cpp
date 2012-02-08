@@ -14,13 +14,13 @@ int main(){
   const double Spot = 1300;
   const double T = 0.25;
   const double r = 0.0025;
-  const double q = .0125;
-  vector<double> output;
+  const double q = 0;
+  vector<Option> output;
 
-  GBM_model gbm(.35,r,q,T,N,alpha,eta);
-  output = gbm.PutPrices(Spot,exp(-r*T));
+  GBM_model gbm(.35,r,q,T);
+  output = gbm.PutPrices(Spot,1150.0,exp(-r*T),N,alpha,eta);
   for(int i =0; i!=output.size();i++)
-    cout<<output[i]<<endl; 
+    cout<<output[i].strike<<" : "<<output[i].premium<<endl; 
   return 0;
   }
 
