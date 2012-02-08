@@ -34,7 +34,7 @@ int main(){
   for(vector<double>::iterator a_iter=alpha.begin(); a_iter!= alpha.end(); a_iter++){
     for(vector<double>::iterator e_iter=eta.begin(); e_iter!= eta.end(); e_iter++){
       for(vector<unsigned int>::iterator N_iter = N.begin(); N_iter!=N.end(); N_iter++){
-	vector<Option> results =gbm.PutPrices(Strike,exp(-.05),*N_iter,*a_iter,*e_iter);
+	vector<Option> results =gbm.PutPrices(Spot,Strike,exp(-.05),*N_iter,*a_iter,*e_iter);
 	cout<<results[*N_iter/2].premium<<" ";
 	} 
       }
