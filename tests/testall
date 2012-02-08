@@ -1,0 +1,30 @@
+#!/bin/bash
+
+testfiles=./*.cpp
+dependencies="../src/pricemodels.cpp -lfftw3 -lm"
+logfile=./testlog
+failures=0
+
+echo "" >> $logfile
+echo $(date) >> $logfile
+
+for f in $testfiles
+do
+  echo Testing $f
+  g++ -o tempexe $f $dependencies
+  ./tempexe > temp
+  if ! diff -q "$f.out" "./temp"  
+  then
+    echo $f failed && failures=$((failures + 1)) && echo $f failed >> $logfile
+  else
+    echo $f passed && echo $f passed >> $logfile
+  fi
+done
+echo $failures failed tests
+
+if [ $failures = "0" ]
+  then
+    echo All Tests Passed >> $logfile
+fi
+
+rm temp tempexe

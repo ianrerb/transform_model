@@ -1,0 +1,12 @@
+#!/bin/bash
+
+g++ -o temp $1 ../src/pricemodels.cpp -lfftw3 -lm
+
+if ! [ "$2" = "" ]
+then
+  ./temp > $2
+else
+  ./temp > $1.out
+fi
+
+rm temp

@@ -1,6 +1,8 @@
 OBJ= main.o pricemodels.o
 CPL= g++ -c
 LNK= g++ -o
+INC=include/
+SRC=src/
 
 main : $(OBJ)
 	$(LNK) main $(OBJ) -lfftw3 -lm
@@ -8,8 +10,8 @@ main : $(OBJ)
 main.o : main.cpp
 	$(CPL) main.cpp
 
-pricemodels.o : pricemodels.cpp pricemodels.h
-	$(CPL) pricemodels.cpp
+pricemodels.o : $(SRC)pricemodels.cpp $(INC)pricemodels.h
+	$(CPL) $(SRC)pricemodels.cpp
 
 run :
 	./main

@@ -2,11 +2,9 @@
 #include<complex.h>
 #include<math.h>
 #include<vector>
-#include"pricemodels.h"
-
+#include"include/pricemodels.h"
+#include<cstdio>
 using namespace std;
-
-void resetStrikes(vector<double> &);
 
 int main(){
   // Constants
@@ -17,18 +15,12 @@ int main(){
   const double T = 0.25;
   const double r = 0.0025;
   const double q = .0125;
-  vector<double> K; 
-  resetStrikes(K);
- 
+  vector<double> output;
+
   GBM_model gbm(.35,r,q,T,N,alpha,eta);
-  double complex val = gbm.logCF(100,1);
-  
-  cout<<creal(val)<<"\t"<<cimag(val)<<endl;
+  output = gbm.PutPrices(Spot,exp(-r*T));
+  for(int i =0; i!=output.size();i++)
+    cout<<output[i]<<endl; 
   return 0;
   }
 
-void resetStrikes(vector<double> &K){
-  K.empty();
-  for(int val = 1000; val <= 1300; val+=50)
-    K.push_back(static_cast<double>(val));
-  };
