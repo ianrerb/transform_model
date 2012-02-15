@@ -46,7 +46,7 @@ class GBM : public pricemodel {
 
 class Heston : public pricemodel {
   public:
-    Heston(double kappa_, double theta_, double sigma_, double v0, double rho_=0.0,  double interest_rate=0.0, double div_rate=0.0, double time=0.0): pricemodel(interest_rate, div_rate, time),kappa(kappa_), theta(theta_), sigma(sigma_), rho(rho_) {}; 
+    Heston(double kappa_, double theta_, double sigma_, double init_vol, double rho_=0.0,  double interest_rate=0.0, double div_rate=0.0, double time=0.0): pricemodel(interest_rate, div_rate, time),kappa(kappa_), theta(theta_), sigma(sigma_), v0(init_vol), rho(rho_) {}; 
     ~Heston(){};
 
     void setKappa(double &kappa_) {kappa = kappa_; };
