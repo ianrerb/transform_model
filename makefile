@@ -1,4 +1,4 @@
-OBJ= main.o pricemodels.o
+OBJ= main.o GBM.o Heston.o FFT.o
 CPL= g++ -c
 LNK= g++ -o
 INC=include/
@@ -10,8 +10,14 @@ main : $(OBJ)
 main.o : main.cpp
 	$(CPL) main.cpp
 
-pricemodels.o : $(SRC)pricemodels.cpp $(INC)pricemodels.h
-	$(CPL) $(SRC)pricemodels.cpp
+GBM.o : $(SRC)GBM.cpp $(INC)pricemodels.h
+	$(CPL) $(SRC)GBM.cpp
+
+Heston.o : $(SRC)Heston.cpp $(INC)pricemodels.h
+	$(CPL) $(SRC)Heston.cpp
+
+FFT.o : $(SRC)FFT.cpp $(INC)transform.h
+	$(CPL) $(SRC)FFT.cpp
 
 run :
 	./main

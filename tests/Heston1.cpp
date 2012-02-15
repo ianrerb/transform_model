@@ -8,15 +8,15 @@ void printComplex(double complex c){
   }
 
 int main(){
-  GBM model(1,.5,0,1);
+  Heston model(2.0,.04,.5,.04,-0.7,.03,0.0,.5);
   double complex val;
-  val = model.logCF(1,1); //should give real val of ~.6065
+  val = model.logCF(1,1); 
   printComplex(val);
    
-  val = model.logCF(100,0); //should give real val of 1
+  val = model.logCF(100,0);
   printComplex(val);
   
-  val = model.logCF(exp(1),1); //should give ~.3277 + .5104i
+  val = model.logCF(exp(1),1); 
   printComplex(val);
   return 0;
   }

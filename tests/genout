@@ -1,6 +1,7 @@
 #!/bin/bash
+SRC='../src/GBM.cpp ../src/FFT.cpp ../src/Heston.cpp'
 
-g++ -o temp $1 ../src/pricemodels.cpp -lfftw3 -lm
+g++ -o temp $1 $SRC -lfftw3 -lm
 
 if ! [ "$2" = "" ]
 then

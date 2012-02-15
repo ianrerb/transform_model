@@ -48,8 +48,3 @@ std::vector<Option> fft_base::PutPrices(const double &Spot,
   return retvals;
   
   }
-
-double complex GBM_model::logCF(const double &S, const double complex &u) const{
-  double complex retval = I*(log(S) + (r - q - cpow(sigma,2.0)/2.0)*t)*u - cpow(sigma*u,2.0)*t/2.0;
-  return cexp(retval);
-  }
