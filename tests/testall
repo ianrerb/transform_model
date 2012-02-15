@@ -1,7 +1,7 @@
 #!/bin/bash
 
 testfiles=./*.cpp
-dependencies="../src/GBM.cpp ../src/FFT.cpp ../src/Heston.cpp -lfftw3 -lm"
+dependencies="../src/* -lfftw3 -lm"
 logfile=./testlog
 failures=0
 

@@ -66,4 +66,45 @@ class Heston : public pricemodel {
   private:
     double kappa, theta, sigma, rho, v0;
   };
+
+class VarianceGamma : public pricemodel {
+  public:
+    VarianceGamma(double sigma_, double theta_, double v_, double interest_rate=0.0, double div_rate=0.0, double time=0.0): pricemodel(interest_rate, div_rate, time), sigma(sigma_), theta(theta_), v(v_) {}; 
+    ~VarianceGamma(){};
+
+    void setV(double &v_) {v = v_; };
+    void setTheta(double &theta_) {theta = theta_; };
+    void setSigma(double &sigma_) {sigma = sigma_; };
+
+    double V() const {return v; };
+    double Theta() const {return theta; };
+    double Sigma() const {return sigma; };
+
+    double complex logCF(const double &S, const double complex &u) const; //defined in VarianceGamma.cpp    
+
+  private:
+    double v, theta, sigma;
+  };
+
+class CGMY : public pricemodel {
+  public:
+    CGMY(double C_, double G_, double M_, double Y_, double interest_rate=0.0, double div_rate=0.0, double time=0.0): pricemodel(interest_rate, div_rate, time), C_param(C_), G_param(G_), M_param(M_), Y_param(Y_) {}; 
+    ~CGMY(){};
+
+    void setC(double &C_) {C_param = C_; };
+    void setG(double &G_) {G_param = G_; };
+    void setM(double &M_) {M_param = M_; };
+    void setY(double &Y_) {Y_param = Y_; };
+
+    double C() const {return C_param; };
+    double G() const {return G_param; };
+    double M() const {return M_param; };
+    double Y() const {return Y_param; };
+
+    double complex logCF(const double &S, const double complex &u) const; //defined in CGMY.cpp    
+
+  private:
+    double complex Omega_helper(double complex val = 1.0) const; //helper function to calculate omega for logCF
+    double C_param, G_param, M_param, Y_param;
+  };
 #endif

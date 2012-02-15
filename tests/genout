@@ -1,5 +1,5 @@
 #!/bin/bash
-SRC='../src/GBM.cpp ../src/FFT.cpp ../src/Heston.cpp'
+SRC='../src/*'
 
 g++ -o temp $1 $SRC -lfftw3 -lm
 

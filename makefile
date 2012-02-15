@@ -1,4 +1,4 @@
-OBJ= main.o GBM.o Heston.o FFT.o
+OBJ= main.o GBM.o Heston.o VarianceGamma.o CGMY.o FFT.o
 CPL= g++ -c
 LNK= g++ -o
 INC=include/
@@ -15,6 +15,12 @@ GBM.o : $(SRC)GBM.cpp $(INC)pricemodel.h
 
 Heston.o : $(SRC)Heston.cpp $(INC)pricemodel.h
 	$(CPL) $(SRC)Heston.cpp
+
+VarianceGamma.o : $(SRC)VarianceGamma.cpp $(INC)pricemodel.h
+	$(CPL) $(SRC)VarianceGamma.cpp
+
+CGMY.o : $(SRC)CGMY.cpp $(INC)pricemodel.h $(INC)sp_gamma.h
+	$(CPL) $(SRC)CGMY.cpp
 
 FFT.o : $(SRC)FFT.cpp $(INC)transform.h
 	$(CPL) $(SRC)FFT.cpp

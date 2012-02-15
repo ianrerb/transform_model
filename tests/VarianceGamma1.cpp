@@ -8,15 +8,15 @@ void printComplex(double complex c){
   }
 
 int main(){
-  Heston model(2.0,.04,.5,.04,-0.7,.03,0.0,.5);
+  VarianceGamma model(.12,-.14,.2,.1,0,1.0/12.0);
   double complex val;
-  val = model.logCF(1,1);
+  val = model.logCF(1,1); 
   printComplex(val);
    
-  val = model.logCF(100,0); 
+  val = model.logCF(100,0);
   printComplex(val);
   
-  val = model.logCF(exp(1),1); 
+  val = model.logCF(exp(1),1);
   printComplex(val);
   return 0;
   }
