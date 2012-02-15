@@ -52,3 +52,29 @@ Wed Feb 15 06:58:17 EST 2012
 ./FFT1.cpp passed
 ./GBM1.cpp passed
 All Tests Passed
+
+Wed Feb 15 10:50:29 EST 2012
+./FFT1.cpp passed
+./FFT_Heston.cpp failed
+./GBM1.cpp passed
+./Heston1.cpp failed
+
+Wed Feb 15 10:51:35 EST 2012
+./FFT1.cpp passed
+./FFT_Heston.cpp passed
+./GBM1.cpp passed
+./Heston1.cpp failed
+
+Wed Feb 15 11:45:51 EST 2012
+./FFT1.cpp passed
+./FFT_Heston.cpp passed
+./GBM1.cpp passed
+./Heston1.cpp passed
+All Tests Passed
+
+Wed Feb 15 11:54:59 EST 2012
+./FFT1.cpp passed
+./FFT_Heston.cpp passed
+./GBM1.cpp passed
+./Heston1.cpp passed
+All Tests Passed

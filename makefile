@@ -10,10 +10,10 @@ main : $(OBJ)
 main.o : main.cpp
 	$(CPL) main.cpp
 
-GBM.o : $(SRC)GBM.cpp $(INC)pricemodels.h
+GBM.o : $(SRC)GBM.cpp $(INC)pricemodel.h
 	$(CPL) $(SRC)GBM.cpp
 
-Heston.o : $(SRC)Heston.cpp $(INC)pricemodels.h
+Heston.o : $(SRC)Heston.cpp $(INC)pricemodel.h
 	$(CPL) $(SRC)Heston.cpp
 
 FFT.o : $(SRC)FFT.cpp $(INC)transform.h

@@ -16,7 +16,7 @@ int main(){
   rho=-0.7;
   rate = .03;
   q = 0.0;
-  T=.05;
+  T=.5;
 
   Heston model(kappa, theta, sigma, v0, rho, rate,q,T);
   FFT Engine(0,0,0);
