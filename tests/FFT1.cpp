@@ -39,9 +39,9 @@ int main(){
   for(vector<double>::iterator ait = alpha.begin(); ait!=alpha.end(); ait++){
     for(vector<double>::iterator eit = eta.begin(); eit!= eta.end(); eit++){
       for(vector<unsigned int>::iterator nit = n.begin(); nit!=n.end(); nit++){
-	  Engine.setN(*nit);
-	  Engine.setAlpha(*ait);
-	  Engine.setEta(*eit);
+	  Engine.N(*nit);
+	  Engine.Alpha(*ait);
+	  Engine.Eta(*eit);
 	  cout<<Engine.Prices(Spot,Strike,exp(-rate*T),model)[*nit/2].premium<<"  ";
 	}
       }

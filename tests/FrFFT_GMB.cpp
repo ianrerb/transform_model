@@ -6,18 +6,16 @@
 using namespace std;
 
 int main(){
-  double Spot, Strike, rate, q, T, sigma, theta, v ;
+  double Spot, Strike, rate, q, T, vol;
   Spot = 100;
   Strike = 90;
-  sigma=.12;
-  theta = -.14;
-  v=.2;
-  rate = .1;
+  rate = .05;
   q = 0.0;
-  T=1.0/12.0;
+  T=1.0;
+  vol = .3;
 
-  VarianceGamma model(sigma,theta,v,rate,q,T);
-  FFT Engine(0,0,0);
+  GBM model(vol,rate,q,T);
+  FrFFT Engine(0,0,0,.01);
 
   vector<double> alpha, eta;
   vector<unsigned int> n; 
@@ -30,13 +28,11 @@ int main(){
   alpha.push_back(5);
   alpha.push_back(10);
 
-  eta.push_back(.15);
-  eta.push_back(.1);
-  eta.push_back(.05);
+  eta.push_back(.25);
   
+  n.push_back(64);
   n.push_back(256);
   n.push_back(1024);
-  n.push_back(4096);
 
   for(vector<double>::iterator ait = alpha.begin(); ait!=alpha.end(); ait++){
     for(vector<double>::iterator eit = eta.begin(); eit!= eta.end(); eit++){

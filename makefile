@@ -1,4 +1,4 @@
-OBJ= main.o GBM.o Heston.o VarianceGamma.o CGMY.o FFT.o
+OBJ= main.o GBM.o Heston.o VarianceGamma.o CGMY.o FFT.o FrFFT.o
 CPL= g++ -c
 LNK= g++ -o
 INC=include/
@@ -24,6 +24,10 @@ CGMY.o : $(SRC)CGMY.cpp $(INC)pricemodel.h $(INC)sp_gamma.h
 
 FFT.o : $(SRC)FFT.cpp $(INC)transform.h
 	$(CPL) $(SRC)FFT.cpp
+
+FrFFT.o : $(SRC)FrFFT.cpp $(INC)transform.h
+	$(CPL) $(SRC)FrFFT.cpp
+
 
 run :
 	./main

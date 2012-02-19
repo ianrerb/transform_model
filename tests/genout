@@ -7,7 +7,7 @@ if ! [ "$2" = "" ]
 then
   ./temp > $2
 else
-  ./temp > $1.out
+  ./temp > ./outputs/$1.out
 fi
 
 rm temp

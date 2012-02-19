@@ -1,6 +1,6 @@
 #!/bin/bash
 
-testfiles=./*.cpp
+testfiles=*.cpp
 dependencies="../src/* -lfftw3 -lm"
 logfile=./testlog
 failures=0
@@ -13,7 +13,7 @@ do
   echo Testing $f
   g++ -o tempexe $f $dependencies
   ./tempexe > temp
-  if ! diff -q "$f.out" "./temp"  
+  if ! diff -q "outputs/$f.out" "./temp"  
   then
     echo $f failed && failures=$((failures + 1)) && echo $f failed >> $logfile
   else

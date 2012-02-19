@@ -3,3 +3,4 @@ main.o
 pricemodels.o
 testlog
 .RData
+rscripts

@@ -19,26 +19,50 @@ class transform_base {//abc
  
  class FFT : public transform_base {
   public:
-    FFT(unsigned int N_, double alpha_,double eta_) : N(N_), alpha(alpha_), eta(eta_){ }; 
-    ~FFT(){ }; 
+    FFT(unsigned int size, double alpha_,double eta_) : N_(size), alpha(alpha_), eta(eta_){ }; 
+    virtual ~FFT(){ }; 
     
-    void setN(const unsigned int &val){ N = val; };
-    void setAlpha(const double &val){ alpha = val; };
-    void setEta(const double &val){eta = val; };
+    void N(const unsigned int &val){ N_ = val; };
+    void Alpha(const double &val){ alpha = val; };
+    void Eta(const double &val){eta = val; };
     
-    unsigned int getN() const { return N; };
+    unsigned int N() const { return N_; };
     double Alpha() const { return alpha; };
     double Eta() const { return eta; };
-    double Lambda() const {return 2.0*PI/(static_cast<double>(N)*eta); };
-     
-    std::vector<Option> Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model) const; //defined in FFTengine.cpp
+    virtual double Lambda() const {return 2.0*PI/(static_cast<double>(N_)*eta); };
+    
+    virtual std::vector<Option> Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model) const; //defined in FFTengine.cpp
     
 
-  private:
+  protected:
     double alpha, eta;
-    unsigned int N;
+    unsigned int N_;
     
     void ComputeX(double complex X[], const double &Spot, const double &Strike, const double &C, const pricemodel &model) const;  //defined in FFTengine.cpp
+  };
+
+class FrFFT : public FFT {
+  public:
+  FrFFT(unsigned int n, double alpha_, double eta_, double lambda_, bool testing = false): FFT(n, alpha_, eta_), lambda(lambda_), testmode(testing){};
+  ~FrFFT(){ };
+  
+  void Lambda(const double &l){ lambda = l; };
+  double Lambda() const { return lambda; };
+  
+  double Gamma() const { return eta*lambda/(2.0*PI); };
+
+  std::vector<Option> Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model) const; //defined in FrFFT.cpp
+  
+  private:
+    double lambda;
+    bool testmode;
+         
+    void ComputeY(double complex Y[],const double complex X[]) const; //defined in FrFFT.cpp
+
+    void ComputeZ(double complex Z[]) const; //defined in FrFFT.cpp
+
+    void ComputeXi(double complex Xi[], const double complex Y[], const double complex Z[]) const; //defined in FrFFT.cpp
+
   };
 
 #endif

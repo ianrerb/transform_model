@@ -106,3 +106,144 @@ Wed Feb 15 15:58:25 EST 2012
 ./Heston1.cpp passed
 ./VarianceGamma1.cpp passed
 All Tests Passed
+
+Sat Feb 18 11:22:39 EST 2012
+/testsrc/*.cpp failed
+
+Sat Feb 18 11:23:14 EST 2012
+./testsrc/CGMY1.cpp failed
+./testsrc/FFT1.cpp failed
+./testsrc/FFT_CGMY.cpp failed
+./testsrc/FFT_Heston.cpp failed
+./testsrc/FFT_VG.cpp failed
+./testsrc/GBM1.cpp failed
+./testsrc/Heston1.cpp failed
+./testsrc/VarianceGamma1.cpp failed
+
+Sat Feb 18 11:25:01 EST 2012
+./testsrc/CGMY1.cpp failed
+./testsrc/FFT1.cpp failed
+./testsrc/FFT_CGMY.cpp failed
+./testsrc/FFT_Heston.cpp failed
+./testsrc/FFT_VG.cpp failed
+./testsrc/GBM1.cpp failed
+./testsrc/Heston1.cpp failed
+./testsrc/VarianceGamma1.cpp failed
+
+Sat Feb 18 11:27:35 EST 2012
+./testsrc/*.cpp failed
+
+Sat Feb 18 11:27:57 EST 2012
+CGMY1.cpp passed
+FFT1.cpp passed
+FFT_CGMY.cpp passed
+FFT_Heston.cpp passed
+FFT_VG.cpp passed
+GBM1.cpp passed
+Heston1.cpp passed
+VarianceGamma1.cpp passed
+All Tests Passed
+
+Sat Feb 18 11:40:14 EST 2012
+CGMY1.cpp failed
+FFT1.cpp failed
+FFT_CGMY.cpp failed
+FFT_Heston.cpp failed
+FFT_VG.cpp failed
+GBM1.cpp failed
+Heston1.cpp failed
+VarianceGamma1.cpp failed
+
+Sat Feb 18 11:41:16 EST 2012
+CGMY1.cpp failed
+FFT1.cpp failed
+
+Sat Feb 18 11:42:15 EST 2012
+CGMY1.cpp passed
+FFT1.cpp passed
+FFT_CGMY.cpp passed
+FFT_Heston.cpp passed
+FFT_VG.cpp passed
+GBM1.cpp passed
+Heston1.cpp passed
+VarianceGamma1.cpp passed
+All Tests Passed
+
+Sat Feb 18 12:19:54 EST 2012
+CGMY1.cpp failed
+FFT1.cpp failed
+FFT_CGMY.cpp failed
+FFT_Heston.cpp failed
+FFT_VG.cpp failed
+GBM1.cpp failed
+
+Sat Feb 18 12:20:53 EST 2012
+CGMY1.cpp failed
+FFT1.cpp failed
+FFT_CGMY.cpp failed
+
+Sat Feb 18 12:21:43 EST 2012
+CGMY1.cpp failed
+FFT1.cpp failed
+FFT_CGMY.cpp failed
+FFT_Heston.cpp failed
+FFT_VG.cpp failed
+GBM1.cpp passed
+Heston1.cpp passed
+
+Sat Feb 18 12:21:52 EST 2012
+CGMY1.cpp passed
+FFT1.cpp passed
+FFT_CGMY.cpp passed
+FFT_Heston.cpp passed
+FFT_VG.cpp passed
+GBM1.cpp passed
+Heston1.cpp passed
+VarianceGamma1.cpp passed
+All Tests Passed
+
+Sat Feb 18 12:31:52 EST 2012
+CGMY1.cpp passed
+FFT1.cpp passed
+FFT_CGMY.cpp passed
+FFT_Heston.cpp passed
+FFT_VG.cpp passed
+FrFFT_GMB.cpp failed
+GBM1.cpp passed
+Heston1.cpp passed
+VarianceGamma1.cpp passed
+
+Sat Feb 18 12:33:13 EST 2012
+CGMY1.cpp passed
+FFT1.cpp passed
+FFT_CGMY.cpp passed
+FFT_Heston.cpp passed
+FFT_VG.cpp passed
+FrFFT_GMB.cpp failed
+GBM1.cpp passed
+Heston1.cpp passed
+VarianceGamma1.cpp passed
+
+Sat Feb 18 12:59:07 EST 2012
+CGMY1.cpp passed
+FFT1.cpp passed
+FFT_CGMY.cpp passed
+FFT_Heston.cpp passed
+FFT_VG.cpp passed
+FrFFT1.cpp passed
+FrFFT_GMB.cpp failed
+GBM1.cpp passed
+Heston1.cpp passed
+VarianceGamma1.cpp passed
+
+Sat Feb 18 12:59:39 EST 2012
+CGMY1.cpp passed
+FFT1.cpp passed
+FFT_CGMY.cpp passed
+FFT_Heston.cpp passed
+FFT_VG.cpp passed
+FrFFT1.cpp passed
+FrFFT_GMB.cpp failed
+GBM1.cpp passed
+Heston1.cpp passed
+VarianceGamma1.cpp passed
