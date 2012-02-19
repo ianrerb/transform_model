@@ -1,4 +1,5 @@
 #include "../include/transform.h"
+#include<iostream>
 
 void FFT::ComputeX(double complex X[], const double &Spot, const double &Strike, const double &C, const pricemodel &model) const {
   double lnK = log(Strike); //takes log of strike price
@@ -14,8 +15,8 @@ void FFT::ComputeX(double complex X[], const double &Spot, const double &Strike,
   
   if(testmode==true){
     std::cout<<std::endl<<" <++ THIS IS RAW X ARRAY ++>"<<std::endl;
-      for(int i = 0; i!= size; i++)
-	std::cout<<"("<<creal(Y[i])<<" , "<<cimag(Y[i])<<")"<<std::endl;
+      for(int i = 0; i!= N_; i++)
+	std::cout<<"("<<creal(X[i])<<" , "<<cimag(X[i])<<")"<<std::endl;
     }
   }
 

@@ -13,8 +13,8 @@ void FrFFT::ComputeY(double complex Y[], const double complex X[]) const {
       for(int i = 0; i!= size; i++)
 	std::cout<<"("<<creal(Y[i])<<" , "<<cimag(Y[i])<<")"<<std::endl;
     }
- 
   }
+
 void FrFFT::ComputeZ(double complex Z[]) const {
   unsigned int size = 2*N_;
   for(int i=0; i!=N_; i++){

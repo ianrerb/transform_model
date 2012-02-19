@@ -11,15 +11,18 @@ struct Option {double strike; double premium; }; //struct to hold strike, premiu
 
 class transform_base {//abc
   public:
-    transform_base(){ };
+    transform_base(bool test = false):testmode(test){ };
     virtual ~transform_base(){ };
     
     virtual std::vector<Option> Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model) const =0;
+
+  protected:
+    bool testmode;
  };
  
  class FFT : public transform_base {
   public:
-    FFT(unsigned int size, double alpha_,double eta_) : N_(size), alpha(alpha_), eta(eta_){ }; 
+    FFT(unsigned int size, double alpha_,double eta_, bool test = false) : transform_base(test), N_(size), alpha(alpha_), eta(eta_){ }; 
     virtual ~FFT(){ }; 
     
     void N(const unsigned int &val){ N_ = val; };
@@ -37,13 +40,13 @@ class transform_base {//abc
   protected:
     double alpha, eta;
     unsigned int N_;
-    
+
     void ComputeX(double complex X[], const double &Spot, const double &Strike, const double &C, const pricemodel &model) const;  //defined in FFTengine.cpp
   };
 
 class FrFFT : public FFT {
   public:
-  FrFFT(unsigned int n, double alpha_, double eta_, double lambda_, bool testing = false): FFT(n, alpha_, eta_), lambda(lambda_), testmode(testing){};
+  FrFFT(unsigned int n, double alpha_, double eta_, double lambda_, bool test = false): FFT(n, alpha_, eta_,test), lambda(lambda_){};
   ~FrFFT(){ };
   
   void Lambda(const double &l){ lambda = l; };
@@ -55,7 +58,6 @@ class FrFFT : public FFT {
   
   private:
     double lambda;
-    bool testmode;
          
     void ComputeY(double complex Y[],const double complex X[]) const; //defined in FrFFT.cpp
 
