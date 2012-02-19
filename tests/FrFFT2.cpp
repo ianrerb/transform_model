@@ -7,9 +7,9 @@
 using namespace std;
 
 int main(){
-  FrFFT test(64,1,.15,.01,true);
-  GBM model(.25,.05,0,1);
-
-  test.Prices(100,100,exp(-.05),model);
+  FrFFT test(8,1,.15,.01,true);
+  GBM model(.3,.05,0,1);
+  
+  cout<<test.Prices(100,90,exp(-.05),model)[3].premium;
   return 0;
   }

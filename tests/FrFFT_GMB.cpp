@@ -8,40 +8,29 @@ using namespace std;
 int main(){
   double Spot, Strike, rate, q, T, vol;
   Spot = 100;
-  Strike = 90;
-  rate = .05;
+  rate = .01;
   q = 0.0;
-  T=1.0;
-  vol = .3;
+  T = .1;
+  vol = .25;
 
   GBM model(vol,rate,q,T);
-  FrFFT Engine(0,0,0,.01);
+  FrFFT Engine(0,1.5,.15,.01);
 
-  vector<double> alpha, eta;
   vector<unsigned int> n; 
+  vector<double> strikes; 
   
-  alpha.push_back(.01);
-  alpha.push_back(.5);
-  alpha.push_back(1);
-  alpha.push_back(1.5);
-  alpha.push_back(2);
-  alpha.push_back(5);
-  alpha.push_back(10);
+  strikes.push_back(80);
+  strikes.push_back(100);
+  strikes.push_back(120);
 
-  eta.push_back(.25);
-  
+  n.push_back(16);
   n.push_back(64);
   n.push_back(256);
-  n.push_back(1024);
 
-  for(vector<double>::iterator ait = alpha.begin(); ait!=alpha.end(); ait++){
-    for(vector<double>::iterator eit = eta.begin(); eit!= eta.end(); eit++){
-      for(vector<unsigned int>::iterator nit = n.begin(); nit!=n.end(); nit++){
+  for(vector<double>::iterator sit = strikes.begin(); sit!=strikes.end(); sit++){
+    for(vector<unsigned int>::iterator nit = n.begin(); nit!=n.end(); nit++){
 	  Engine.N(*nit);
-	  Engine.Alpha(*ait);
-	  Engine.Eta(*eit);
-	  cout<<Engine.Prices(Spot,Strike,exp(-rate*T),model)[*nit/2].premium<<"  ";
-	}
+	  cout<<Engine.Prices(Spot,*sit,exp(-rate*T),model)[*nit/2].premium<<"  ";
       }
     cout<<endl;
     }

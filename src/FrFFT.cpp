@@ -1,5 +1,4 @@
 #include"../include/transform.h"
-#include<iostream>
 
 void FrFFT::ComputeY(double complex Y[], const double complex X[]) const {
   unsigned int size = 2*N_;
@@ -8,11 +7,7 @@ void FrFFT::ComputeY(double complex Y[], const double complex X[]) const {
     Y[i+N_] = 0;
     }
   
-  if(testmode==true){
-    std::cout<<std::endl<<" <++ THIS IS RAW Y ARRAY ++>"<<std::endl;
-      for(int i = 0; i!= size; i++)
-	std::cout<<"("<<creal(Y[i])<<" , "<<cimag(Y[i])<<")"<<std::endl;
-    }
+  if(testmode==true){printComplexArray(Y,size,"Raw Y Vector");}
   }
 
 void FrFFT::ComputeZ(double complex Z[]) const {
@@ -22,11 +17,7 @@ void FrFFT::ComputeZ(double complex Z[]) const {
     Z[size-i-1] = Z[i];
     }
   
-  if(testmode==true){
-    std::cout<<std::endl<<" <++ THIS IS RAW Z ARRAY ++>"<<std::endl;
-    for(int i = 0; i!= size; i++)
-      std::cout<<"("<<creal(Z[i])<<" , "<<cimag(Z[i])<<")"<<std::endl;
-    }
+  if(testmode==true){printComplexArray(Z,size,"Raw Z Vector");}
   }
 
 void FrFFT::ComputeXi(double complex Xi[], const double complex Y[], const double complex Z[]) const {
@@ -34,11 +25,7 @@ void FrFFT::ComputeXi(double complex Xi[], const double complex Y[], const doubl
   for(int i=0; i!=size; i++)
     Xi[i]=Y[i]*Z[i];
   
-  if(testmode==true){
-    std::cout<<std::endl<<" <++ THIS IS RAW Xi ARRAY ++>"<<std::endl;
-    for(int i = 0; i!= size; i++)
-      std::cout<<"("<<creal(Z[i])<<" , "<<cimag(Z[i])<<")"<<std::endl;
-    }
+  if(testmode==true){printComplexArray(Xi,size,"Raw Xi Vector");}
   }
 
 
@@ -58,8 +45,16 @@ std::vector<Option> FrFFT::Prices(const double &Spot, const double &Strike, cons
 
   fftw_execute(Yplan);
   fftw_execute(Zplan);
+  if(testmode==true){printComplexArray(Y,size,"Transformed Y Vector"); printComplexArray(Z,size,"Transformed Z Vector");}
+
   ComputeXi(Xi,Y,Z);
   fftw_execute(Xiplan);
+  
+  //need to scale down Xi by 2N
+  for(int i=0; i!= size; i++)
+    Xi[i]=Xi[i]/static_cast<double>(size);
+
+  if(testmode==true){printComplexArray(Xi,size,"Transformed Xi Vector");}
   
     //extract prices
  for(int i =0; i!= N_; i++){

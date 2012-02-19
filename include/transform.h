@@ -1,11 +1,13 @@
 #ifndef TRANSFORM_H
 #define TRANSFORM_H
-#define PI 3.14159265358979
+#define PI M_PI 
 #include"pricemodel.h"
 #include<complex.h>
 #include<fftw3.h>
 #include<math.h>
 #include<vector>
+#include<iostream>
+#include<string>
 
 struct Option {double strike; double premium; }; //struct to hold strike, premium pairs
 
@@ -18,8 +20,19 @@ class transform_base {//abc
 
   protected:
     bool testmode;
+    void printComplexArray(double complex array[], unsigned int length, std::string title) const {
+      std::cout<<"Array: "<<title<<std::endl;
+      for(unsigned int i=0; i!=length; i++){
+	std::cout<<"("<<creal(array[i])<<","<<cimag(array[i])<<")"<<"  ";
+	}
+      std::cout<<std::endl;
+      };
  };
  
+/**********************************
+ * BEGIN DEFINITION OF FFT CLASS 
+ **********************************/
+
  class FFT : public transform_base {
   public:
     FFT(unsigned int size, double alpha_,double eta_, bool test = false) : transform_base(test), N_(size), alpha(alpha_), eta(eta_){ }; 
@@ -43,6 +56,10 @@ class transform_base {//abc
 
     void ComputeX(double complex X[], const double &Spot, const double &Strike, const double &C, const pricemodel &model) const;  //defined in FFTengine.cpp
   };
+
+/**********************************
+ * BEGIN DEFINITION OF FrFFT CLASS 
+ **********************************/
 
 class FrFFT : public FFT {
   public:

@@ -1,5 +1,4 @@
 #include "../include/transform.h"
-#include<iostream>
 
 void FFT::ComputeX(double complex X[], const double &Spot, const double &Strike, const double &C, const pricemodel &model) const {
   double lnK = log(Strike); //takes log of strike price
@@ -8,16 +7,12 @@ void FFT::ComputeX(double complex X[], const double &Spot, const double &Strike,
   for(int j = 0; j!=N_; j++){
     double complex nu = static_cast<double>(j)*eta; //nu = (j-1)eta
     double complex val = alpha+I*nu; //denominator of C term
-    double complex temp = eta*C/(val*(1.0+val))*cexp(-I*nu*(lnK-PI/eta))*model.logCF(Spot,nu-(alpha+1.0)*I); //x_j j!=0
+    double complex temp = eta*C/(val*(1.0+val))*cexp(-I*nu*(lnK-lambda*static_cast<double>(N_)/2.0))*model.logCF(Spot,nu-(alpha+1.0)*I); //x_j j!=0
     if(j==0){ temp*=.5; }//adjustment for j = 0
     X[j]=temp;
     }
   
-  if(testmode==true){
-    std::cout<<std::endl<<" <++ THIS IS RAW X ARRAY ++>"<<std::endl;
-      for(int i = 0; i!= N_; i++)
-	std::cout<<"("<<creal(X[i])<<" , "<<cimag(X[i])<<")"<<std::endl;
-    }
+  if(testmode==true){printComplexArray(X,N_,"Raw X Vector");}
   }
 
 std::vector<Option> FFT::Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model) const {
