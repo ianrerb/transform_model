@@ -1,17 +1,25 @@
 #!/bin/bash
 
 testfiles=*.cpp
-dependencies="../src/* -lfftw3 -lm"
+dependencies="../src/*"
+
 logfile=./testlog
 failures=0
 
+for f in $dependencies
+do
+  g++ -c $f
+done
+
+OBJ=./*.o 
+  
 echo "" >> $logfile
 echo $(date) >> $logfile
 
 for f in $testfiles
 do
   echo Testing $f
-  g++ -o tempexe $f $dependencies
+  g++ -o tempexe $f $OBJ -lfftw3 -lm
   ./tempexe > temp
   if ! diff -q "outputs/$f.out" "./temp"  
   then
@@ -27,4 +35,4 @@ if [ $failures = "0" ]
     echo All Tests Passed >> $logfile
 fi
 
-rm temp tempexe
+rm temp tempexe $OBJ 

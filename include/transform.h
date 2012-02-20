@@ -27,7 +27,8 @@ class transform_base {//abc
 
   protected:
     unsigned int N_;
-   
+
+    //the testmode variable and print routine are used for debugging 
     bool testmode;
     void printComplexArray(double complex array[], unsigned int length, std::string title) const {
       std::cout<<"Array: "<<title<<std::endl;
@@ -68,19 +69,22 @@ class transform_base {//abc
 
 class FrFFT : public FFT {
   public:
-  FrFFT(unsigned int size, double alpha_, double eta_, double lambda_, bool test = false): FFT(size, alpha_, eta_,test), lambda(lambda_){};
+  FrFFT(unsigned int size, double alpha_, double eta_, double lambda_, bool test = false): FFT(size, alpha_, eta_,test), lambda(lambda_){
+    RefreshGamma();
+    };
   ~FrFFT(){ };
   
-  void Lambda(const double &l){ lambda = l; };
+  void Lambda(const double &l){ lambda = l; RefreshGamma(); };
   double Lambda() const { return lambda; };
-  
-  double Gamma() const { return eta*lambda/(2.0*PI); };
+  double Gamma() const { return gamma; }
 
   std::vector<Option> Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model) const; //defined in FrFFT.cpp
   
   private:
     double lambda;
-         
+    double gamma;
+    
+    double RefreshGamma() { gamma = eta*lambda/(2.0*PI); };
     void ComputeY(double complex Y[],const double complex X[]) const; //defined in FrFFT.cpp
 
     void ComputeZ(double complex Z[]) const; //defined in FrFFT.cpp
@@ -88,5 +92,54 @@ class FrFFT : public FFT {
     void ComputeXi(double complex Xi[], const double complex Y[], const double complex Z[]) const; //defined in FrFFT.cpp
 
   };
+/**********************************
+ * Payoff Function for COS METHOD
+ **********************************/
 
+class COS_Payoff {
+  public:
+    enum OptionType {call, put};
+    COS_Payoff(OptionType type_ = call, double strike_=0.0): type(type_), strike(strike_) { };
+    ~COS_Payoff(){ };
+
+    double operator()(const unsigned int &k, const double &a, const double &b, const double &c, const double &d) const;
+   
+   OptionType ContractType() const {return type;};
+   void ContractType(const OptionType &t){ type = t; }; 
+  private:
+    OptionType type;
+    double strike;
+
+    double phi_helper(const unsigned int &k, const double &a, const double &b, const double &c, const double &d) const;
+    double chi_helper(const unsigned int &k, const double &a, const double &b, const double &c, const double &d) const; 
+  };
+
+/**********************************
+ * BEGIN DEFINITION OF COS METHOD CLASS 
+ **********************************/
+
+class COS : public transform_base {
+  public:
+    COS(unsigned int size, double low_bound=0, double high_bound=0, bool test = false): transform_base(size,test), a(low_bound), b(high_bound) { VerifyBounds(); };
+    ~COS(){};
+    
+    void Bounds(const double &low, const double &high);
+    void LowerBound(const double &low);
+    void UpperBound(const double &high);
+    void ContractType(const COS_Payoff::OptionType &type){ V_func.ContractType(type); }; 
+    
+    double LowerBound() const {return a; };
+    double UpperBound() const {return b; };
+    bool isValid() const { return valid_flag; };
+    COS_Payoff::OptionType ContractType() const {return V_func.ContractType(); };
+
+    std::vector<Option> Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model) const;
+
+  private:
+    double a;
+    double b; 
+    COS_Payoff V_func;
+    bool valid_flag;
+    void VerifyBounds();
+  };
 #endif

@@ -3,7 +3,7 @@
 void FrFFT::ComputeY(double complex Y[], const double complex X[]) const {
   unsigned int size = 2*N_;
   for(int i=0; i!=N_; i++){
-    Y[i] = X[i]*cexp(-I*PI*Gamma()*i*i);
+    Y[i] = X[i]*cexp(-I*PI*gamma*i*i);
     Y[i+N_] = 0;
     }
   
@@ -13,7 +13,7 @@ void FrFFT::ComputeY(double complex Y[], const double complex X[]) const {
 void FrFFT::ComputeZ(double complex Z[]) const {
   unsigned int size = 2*N_;
   for(int i=0; i!=N_; i++){
-    Z[i] = cexp(I*Gamma()*PI*static_cast<double>(i*i));
+    Z[i] = cexp(I*gamma*PI*static_cast<double>(i*i));
     Z[size-i-1] = Z[i];
     }
   
@@ -61,7 +61,7 @@ std::vector<Option> FrFFT::Prices(const double &Spot, const double &Strike, cons
     double lnK = log(Strike)-lambda*(static_cast<double>(N_)/2.0-static_cast<double>(i));
     Option temp;
     temp.strike = exp(lnK); 
-    temp.premium = exp(-alpha*lnK)*creal(cexp(-I*PI*Gamma()*i*i)*Xi[i])/PI; 
+    temp.premium = exp(-alpha*lnK)*creal(cexp(-I*PI*gamma*i*i)*Xi[i])/PI; 
     retvals.push_back(temp);
     }
     
