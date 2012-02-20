@@ -11,14 +11,23 @@
 
 struct Option {double strike; double premium; }; //struct to hold strike, premium pairs
 
+/********************************************
+ * ABSTRACT BASE CLASS FOR TRANSFORM CLASSES 
+ ********************************************/
+
 class transform_base {//abc
   public:
-    transform_base(bool test = false):testmode(test){ };
+    transform_base(unsigned int size, bool test = false):N_(size), testmode(test){ };
     virtual ~transform_base(){ };
     
+    void N(const unsigned int &val){ N_ = val; };
+    unsigned int N() const { return N_; };
+
     virtual std::vector<Option> Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model) const =0;
 
   protected:
+    unsigned int N_;
+   
     bool testmode;
     void printComplexArray(double complex array[], unsigned int length, std::string title) const {
       std::cout<<"Array: "<<title<<std::endl;
@@ -35,24 +44,20 @@ class transform_base {//abc
 
  class FFT : public transform_base {
   public:
-    FFT(unsigned int size, double alpha_,double eta_, bool test = false) : transform_base(test), N_(size), alpha(alpha_), eta(eta_){ }; 
+    FFT(unsigned int size, double alpha_,double eta_, bool test = false) : transform_base(size,test), alpha(alpha_), eta(eta_){ }; 
     virtual ~FFT(){ }; 
     
-    void N(const unsigned int &val){ N_ = val; };
     void Alpha(const double &val){ alpha = val; };
     void Eta(const double &val){eta = val; };
     
-    unsigned int N() const { return N_; };
     double Alpha() const { return alpha; };
     double Eta() const { return eta; };
     virtual double Lambda() const {return 2.0*PI/(static_cast<double>(N_)*eta); };
     
     virtual std::vector<Option> Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model) const; //defined in FFTengine.cpp
-    
 
   protected:
     double alpha, eta;
-    unsigned int N_;
 
     void ComputeX(double complex X[], const double &Spot, const double &Strike, const double &C, const pricemodel &model) const;  //defined in FFTengine.cpp
   };
@@ -63,7 +68,7 @@ class transform_base {//abc
 
 class FrFFT : public FFT {
   public:
-  FrFFT(unsigned int n, double alpha_, double eta_, double lambda_, bool test = false): FFT(n, alpha_, eta_,test), lambda(lambda_){};
+  FrFFT(unsigned int size, double alpha_, double eta_, double lambda_, bool test = false): FFT(size, alpha_, eta_,test), lambda(lambda_){};
   ~FrFFT(){ };
   
   void Lambda(const double &l){ lambda = l; };

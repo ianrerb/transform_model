@@ -15,8 +15,7 @@ int main(){
   FrFFT PriceEngine(N,1,.15,.5/static_cast<double>(N));
 
   output = PriceEngine.Prices(100,90,exp(-.05),model);
-  for(int i =1000; i!=output.size();i++)
-    cout<<output[i].strike<<" : "<<output[i].premium<<endl; 
+  cout<<output[N/2].strike<<" : "<<output[N/2].premium<<endl; 
   return 0;
   }
 
