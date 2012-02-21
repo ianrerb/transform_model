@@ -18,7 +18,7 @@ enum OptionType {call, put};
  ********************************************/
 class transform_base {//abc
   public:
-    transform_base(unsigned int size, bool test = false):N_(size), testmode(test){ };
+    transform_base(unsigned int size, bool test):N_(size), testmode(test){ };
     virtual ~transform_base(){ };
     
     void N(const unsigned int &val){ N_ = val; };
@@ -46,7 +46,7 @@ class transform_base {//abc
 
  class FFT : public transform_base {
   public:
-    FFT(unsigned int size, double alpha_,double eta_, bool test = false) : transform_base(size,test), alpha(alpha_), eta(eta_){ }; 
+    FFT(unsigned int size=0, double alpha_=1,double eta_=.25, bool test = false) : transform_base(size,test), alpha(alpha_), eta(eta_){ }; 
     virtual ~FFT(){ }; 
     
     void Alpha(const double &val){ alpha = val; };
@@ -72,7 +72,7 @@ class transform_base {//abc
 
 class FrFFT : public FFT {
   public:
-  FrFFT(unsigned int size, double alpha_, double eta_, double lambda_, bool test = false): FFT(size, alpha_, eta_,test), lambda(lambda_){
+  FrFFT(unsigned int size=0, double alpha_=1, double eta_=.25, double lambda_=.01, bool test = false): FFT(size, alpha_, eta_,test), lambda(lambda_){
     RefreshGamma();
     };
   ~FrFFT(){ };
@@ -123,7 +123,7 @@ class COS_Payoff {
 
 class COS : public transform_base {
   public:
-    COS(unsigned int size, double low_bound=0, double high_bound=0, bool test = false): transform_base(size,test), a(low_bound), b(high_bound) { VerifyBounds(); };
+    COS(unsigned int size=0, double low_bound=0, double high_bound=0, bool test = false): transform_base(size,test), a(low_bound), b(high_bound) { VerifyBounds(); };
     ~COS(){};
     
     void Bounds(const double &low, const double &high);

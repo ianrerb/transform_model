@@ -35,7 +35,7 @@ class pricemodel {
 
 class GBM : public pricemodel {
   public:
-    GBM(double volatility, double interest_rate=0.0, double div_rate=0.0, double time=0.0): pricemodel(interest_rate, div_rate, time), sigma(volatility) { };
+    GBM(double volatility=0.0, double interest_rate=0.0, double div_rate=0.0, double time=0.0): pricemodel(interest_rate, div_rate, time), sigma(volatility) { };
     virtual ~GBM(){ };
     
     void setVolatility(double &vol) {sigma = vol; };
@@ -50,7 +50,7 @@ class GBM : public pricemodel {
 
 class Heston : public pricemodel {
   public:
-    Heston(double kappa_, double theta_, double sigma_, double init_vol, double rho_=0.0,  double interest_rate=0.0, double div_rate=0.0, double time=0.0): pricemodel(interest_rate, div_rate, time),kappa(kappa_), theta(theta_), sigma(sigma_), v0(init_vol), rho(rho_) {
+    Heston(double kappa_=0.0, double theta_=0.0, double sigma_=0.0, double init_vol=0.0, double rho_=0.0,  double interest_rate=0.0, double div_rate=0.0, double time=0.0): pricemodel(interest_rate, div_rate, time),kappa(kappa_), theta(theta_), sigma(sigma_), v0(init_vol), rho(rho_) {
       L_ = 12;//since c4 cumulant not used for COS BOUND
     }; 
     ~Heston(){};
@@ -76,7 +76,7 @@ class Heston : public pricemodel {
 
 class VarianceGamma : public pricemodel {
   public:
-    VarianceGamma(double sigma_, double theta_, double v_, double interest_rate=0.0, double div_rate=0.0, double time=0.0): pricemodel(interest_rate, div_rate, time), sigma(sigma_), theta(theta_), v(v_) {}; 
+    VarianceGamma(double sigma_=0.0, double theta_=0.0, double v_=0.0, double interest_rate=0.0, double div_rate=0.0, double time=0.0): pricemodel(interest_rate, div_rate, time), sigma(sigma_), theta(theta_), v(v_) {}; 
     ~VarianceGamma(){};
 
     void setV(double &v_) {v = v_; };
@@ -96,7 +96,7 @@ class VarianceGamma : public pricemodel {
 
 class CGMY : public pricemodel {
   public:
-    CGMY(double C_, double G_, double M_, double Y_, double interest_rate=0.0, double div_rate=0.0, double time=0.0): pricemodel(interest_rate, div_rate, time), C_param(C_), G_param(G_), M_param(M_), Y_param(Y_) {}; 
+    CGMY(double C_=0.0, double G_=0.0, double M_=0.0, double Y_=0.0, double interest_rate=0.0, double div_rate=0.0, double time=0.0): pricemodel(interest_rate, div_rate, time), C_param(C_), G_param(G_), M_param(M_), Y_param(Y_) {}; 
     ~CGMY(){};
 
     void setC(double &C_) {C_param = C_; };
