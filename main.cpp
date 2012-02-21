@@ -7,15 +7,15 @@
 using namespace std;
 
 int main(){
-  // Constants
-  vector<Option> output;
-  unsigned int N = 2048;
   
   GBM model(.3,.05,0,1);
-  FrFFT PriceEngine(N,1,.15,.5/static_cast<double>(N));
+  COS PriceEngine(16,-.25,.35);
+  PriceEngine.ContractType(call);
+  PriceEngine.BestBounds(model);
+  cout<<PriceEngine.LowerBound()<<endl;
+  
+  cout<<PriceEngine.Price(100,90,exp(-.05),model)<<endl;
 
-  output = PriceEngine.Prices(100,90,exp(-.05),model);
-  cout<<output[N/2].strike<<" : "<<output[N/2].premium<<endl; 
   return 0;
   }
 

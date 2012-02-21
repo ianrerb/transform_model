@@ -1,4 +1,4 @@
-OBJ= main.o GBM.o Heston.o VarianceGamma.o CGMY.o FFT.o FrFFT.o
+OBJ= main.o GBM.o Heston.o VarianceGamma.o CGMY.o FFT.o FrFFT.o COS.o
 CPL= g++ -c
 LNK= g++ -o
 INC=include/
@@ -28,6 +28,8 @@ FFT.o : $(SRC)FFT.cpp $(INC)transform.h
 FrFFT.o : $(SRC)FrFFT.cpp $(INC)transform.h
 	$(CPL) $(SRC)FrFFT.cpp
 
+COS.o : $(SRC)COS.cpp $(INC)transform.h
+	$(CPL) $(SRC)COS.cpp
 
 run :
 	./main

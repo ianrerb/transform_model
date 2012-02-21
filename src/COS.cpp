@@ -72,7 +72,7 @@ double COS::Price(const double &Spot, const double &Strike, const double &C, con
   
   for(unsigned int i = 0; i!= N_; i++){
     double k = static_cast<double>(i);
-    double temp = creal(model.logCF(Spot,k*PI/(b-a))*cexp(-I*k*PI*a/(b-a)));
+    double temp = creal(model.logCF(Spot/Strike,k*PI/(b-a))*cexp(-I*k*PI*a/(b-a)));
     //std::cout<<"Re(...,"<<i<<")"<<temp<<std::endl;
     retval += temp*CalcV(i)*(i==0 ? .5 : 1.0);
     }

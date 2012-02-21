@@ -787,3 +787,42 @@ GBM1.cpp passed
 GBM2.cpp passed
 Heston1.cpp passed
 VarianceGamma1.cpp passed
+
+Tue Feb 21 09:50:16 EST 2012
+BestBounds.cpp failed
+CGMY1.cpp passed
+COS1.cpp passed
+COS_GBM1.cpp passed
+COS_Payoff1.cpp passed
+FFT_CGMY.cpp passed
+FFT_GBM.cpp passed
+FFT_Heston.cpp passed
+FFT_VG.cpp passed
+FrFFT1.cpp passed
+FrFFT2.cpp passed
+FrFFT_GBM2.cpp passed
+FrFFT_GBM.cpp passed
+GBM1.cpp passed
+GBM2.cpp passed
+Heston1.cpp passed
+VarianceGamma1.cpp passed
+
+Tue Feb 21 09:51:12 EST 2012
+BestBounds.cpp passed
+CGMY1.cpp passed
+COS1.cpp passed
+COS_GBM1.cpp passed
+COS_Payoff1.cpp passed
+FFT_CGMY.cpp passed
+FFT_GBM.cpp passed
+FFT_Heston.cpp passed
+FFT_VG.cpp passed
+FrFFT1.cpp passed
+FrFFT2.cpp passed
+FrFFT_GBM2.cpp passed
+FrFFT_GBM.cpp passed
+GBM1.cpp passed
+GBM2.cpp passed
+Heston1.cpp passed
+VarianceGamma1.cpp passed
+All Tests Passed
