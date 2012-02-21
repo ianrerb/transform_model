@@ -29,7 +29,7 @@ void FrFFT::ComputeXi(double complex Xi[], const double complex Y[], const doubl
   }
 
 
-std::vector<Option> FrFFT::Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model) const {
+std::vector<Option> FrFFT::Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model) {
   std::vector<Option> retvals;
   const unsigned int size = 2*N_;
   double complex X[N_], Y[size], Z[size], Xi[size];

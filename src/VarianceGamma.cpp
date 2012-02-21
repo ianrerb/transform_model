@@ -11,3 +11,19 @@ double complex VarianceGamma::logCF(const double &S, const double complex &u) co
   temp2 = cpow(temp2,T/v);
   return temp1*temp2; 
   }
+
+double VarianceGamma::Cumulant(unsigned int k) const{
+  switch(k){
+    case 1 :
+      return ((r+theta)*T);
+    
+    case 2 :
+      return ((sigma*sigma + v*theta*theta)*T);
+
+    case 4 :
+      return (3.0*(pow(sigma,4)*v + 2.0*pow(theta*v,3)*theta+4.0*pow(sigma*theta*v,2))*T);
+
+    default :
+      throw("Invalid Cumulant Option"); 
+    }
+  }

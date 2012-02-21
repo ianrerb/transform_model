@@ -11,42 +11,48 @@
 
 class pricemodel {
   public:
-    pricemodel(double interest_rate=0.0, double div_rate=0.0, double time=0.0) : r(interest_rate), q(div_rate), T(time){ };
+    pricemodel(double interest_rate=0.0, double div_rate=0.0, double time=0.0) : r(interest_rate), q(div_rate), T(time), L_(10) { };
     virtual ~pricemodel(){ };
 
-    void setTimeToExpiry(double &time) { T=time; };
-    void setRiskFreeRate(double &rate) { r=rate; };
-    void setDividendRate(double &div_rate) { q=div_rate; };
+    void TimeToExpiry(double &time) { T=time; };
+    void RiskFreeRate(double &rate) { r=rate; };
+    void DividendRate(double &div_rate) { q=div_rate; };
 
     double TimeToExpiry() const {return T; };
     double RiskFreeRate() const {return r; };
     double DividendRate() const {return q; };
-    
+    double L() const {return L_; };    
     //computes E[exp(iulogS)]
     virtual double complex logCF(const double &S, const double complex &u) const=0;
-  
+    virtual double Cumulant(unsigned int k) const = 0;
+ 
   protected:
     double r;
     double q;
     double T;
+    double L_; //for COS method
   };
 
 class GBM : public pricemodel {
   public:
-    GBM(double volatility, double interest_rate=0.0, double div_rate=0.0, double time=0.0): pricemodel(interest_rate, div_rate, time), sigma(volatility){ };
+    GBM(double volatility, double interest_rate=0.0, double div_rate=0.0, double time=0.0): pricemodel(interest_rate, div_rate, time), sigma(volatility) { };
     virtual ~GBM(){ };
     
     void setVolatility(double &vol) {sigma = vol; };
     double Volatility() const {return sigma; };
 
     double complex logCF(const double &S, const double complex &u) const; //defined in GBM.cpp    
+    double Cumulant(unsigned int k) const;
+  
   private:
     double sigma;
   };
 
 class Heston : public pricemodel {
   public:
-    Heston(double kappa_, double theta_, double sigma_, double init_vol, double rho_=0.0,  double interest_rate=0.0, double div_rate=0.0, double time=0.0): pricemodel(interest_rate, div_rate, time),kappa(kappa_), theta(theta_), sigma(sigma_), v0(init_vol), rho(rho_) {}; 
+    Heston(double kappa_, double theta_, double sigma_, double init_vol, double rho_=0.0,  double interest_rate=0.0, double div_rate=0.0, double time=0.0): pricemodel(interest_rate, div_rate, time),kappa(kappa_), theta(theta_), sigma(sigma_), v0(init_vol), rho(rho_) {
+      L_ = 12;//since c4 cumulant not used for COS BOUND
+    }; 
     ~Heston(){};
 
     void setKappa(double &kappa_) {kappa = kappa_; };
@@ -62,6 +68,7 @@ class Heston : public pricemodel {
     double InitialVolatility() const {return v0; };
 
     double complex logCF(const double &S, const double complex &u) const; //defined in Heston.cpp    
+    double Cumulant(unsigned int k) const;
 
   private:
     double kappa, theta, sigma, rho, v0;
@@ -81,6 +88,7 @@ class VarianceGamma : public pricemodel {
     double Sigma() const {return sigma; };
 
     double complex logCF(const double &S, const double complex &u) const; //defined in VarianceGamma.cpp    
+    double Cumulant(unsigned int k) const;
 
   private:
     double v, theta, sigma;
@@ -102,6 +110,7 @@ class CGMY : public pricemodel {
     double Y() const {return Y_param; };
 
     double complex logCF(const double &S, const double complex &u) const; //defined in CGMY.cpp    
+    double Cumulant(unsigned int k) const;
 
   private:
     double complex Omega_helper(double complex val = 1.0) const; //helper function to calculate omega for logCF

@@ -9,12 +9,13 @@
 #include<iostream>
 #include<string>
 
-struct Option {double strike; double premium; }; //struct to hold strike, premium pairs
+//global definitions for models
+struct Option {double strike; double premium; }; 
+enum OptionType {call, put};
 
 /********************************************
  * ABSTRACT BASE CLASS FOR TRANSFORM CLASSES 
  ********************************************/
-
 class transform_base {//abc
   public:
     transform_base(unsigned int size, bool test = false):N_(size), testmode(test){ };
@@ -23,9 +24,9 @@ class transform_base {//abc
     void N(const unsigned int &val){ N_ = val; };
     unsigned int N() const { return N_; };
 
-    virtual std::vector<Option> Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model) const =0;
+    virtual double Price(const double &Spot, const double &Strike, const double &C, const pricemodel &model)=0;
 
-  protected:
+      protected:
     unsigned int N_;
 
     //the testmode variable and print routine are used for debugging 
@@ -55,12 +56,14 @@ class transform_base {//abc
     double Eta() const { return eta; };
     virtual double Lambda() const {return 2.0*PI/(static_cast<double>(N_)*eta); };
     
-    virtual std::vector<Option> Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model) const; //defined in FFTengine.cpp
+    //the following functions are defined in the FFT.cpp sourcefile
+    double Price(const double &Spot, const double &Strike, const double &C, const pricemodel &model);
+    virtual std::vector<Option> Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model); 
 
   protected:
     double alpha, eta;
 
-    void ComputeX(double complex X[], const double &Spot, const double &Strike, const double &C, const pricemodel &model) const;  //defined in FFTengine.cpp
+    void ComputeX(double complex X[], const double &Spot, const double &Strike, const double &C, const pricemodel &model) const;  
   };
 
 /**********************************
@@ -78,7 +81,7 @@ class FrFFT : public FFT {
   double Lambda() const { return lambda; };
   double Gamma() const { return gamma; }
 
-  std::vector<Option> Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model) const; //defined in FrFFT.cpp
+  std::vector<Option> Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model); //defined in FrFFT.cpp
   
   private:
     double lambda;
@@ -98,20 +101,20 @@ class FrFFT : public FFT {
 
 class COS_Payoff {
   public:
-    enum OptionType {call, put};
     COS_Payoff(OptionType type_ = call, double strike_=0.0): type(type_), strike(strike_) { };
     ~COS_Payoff(){ };
 
-    double operator()(const unsigned int &k, const double &a, const double &b, const double &c, const double &d) const;
+    double operator()(const unsigned int &k, const double &a, const double &b) const;
    
-   OptionType ContractType() const {return type;};
-   void ContractType(const OptionType &t){ type = t; }; 
+    OptionType ContractType() const {return type;};
+    void ContractType(const OptionType &t){ type = t; }; 
+    void Strike(const double &val){ strike = val; };
   private:
     OptionType type;
     double strike;
 
-    double phi_helper(const unsigned int &k, const double &a, const double &b, const double &c, const double &d) const;
-    double chi_helper(const unsigned int &k, const double &a, const double &b, const double &c, const double &d) const; 
+    double phi_helper(const double &k, const double &a, const double &b, const double &c, const double &d) const;
+    double chi_helper(const double &k, const double &a, const double &b, const double &c, const double &d) const; 
   };
 
 /**********************************
@@ -126,14 +129,15 @@ class COS : public transform_base {
     void Bounds(const double &low, const double &high);
     void LowerBound(const double &low);
     void UpperBound(const double &high);
-    void ContractType(const COS_Payoff::OptionType &type){ V_func.ContractType(type); }; 
+    void ContractType(const OptionType &type){ V_func.ContractType(type); }; 
+    void BestBounds(pricemodel &model);
     
     double LowerBound() const {return a; };
     double UpperBound() const {return b; };
     bool isValid() const { return valid_flag; };
-    COS_Payoff::OptionType ContractType() const {return V_func.ContractType(); };
+    OptionType ContractType() const {return V_func.ContractType(); };
 
-    std::vector<Option> Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model) const;
+    double Price(const double &Spot, const double &Strike, const double &C, const pricemodel &model);
 
   private:
     double a;
@@ -141,5 +145,7 @@ class COS : public transform_base {
     COS_Payoff V_func;
     bool valid_flag;
     void VerifyBounds();
+    double CalcV(unsigned int &k) const { return V_func(k,a,b); };
   };
+
 #endif

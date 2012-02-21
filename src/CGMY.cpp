@@ -19,3 +19,23 @@ double complex CGMY::logCF(const double &S, const double complex &u) const {
   return temp1*temp2;
   
   }
+
+double CGMY::Cumulant(unsigned int k) const {
+  double omega = creal(Omega_helper());
+  double chi = 8.0*C_param/(pow(G_param+M_param,2)-pow(G_param-M_param,2));
+
+  switch(k){
+    case 1 :
+      return ((r+omega)*T + T*C_param*sp_gamma(1.0-Y_param)*(-pow(M_param,Y_param-1)+pow(G_param,Y_param-1)));
+    
+    case 2 :
+      return (chi + T*C_param*sp_gamma(2.0-Y_param)*(pow(M_param,Y_param-2)+pow(G_param,Y_param-2)));
+
+    case 4 :
+      return (C_param*T*sp_gamma(4.0-Y_param)*(pow(M_param,Y_param-4)+pow(G_param,Y_param-4)));
+    
+    default :
+      throw("Invalid Cumulant Option"); 
+ 
+    }
+  }

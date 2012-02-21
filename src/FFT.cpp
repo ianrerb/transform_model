@@ -15,7 +15,11 @@ void FFT::ComputeX(double complex X[], const double &Spot, const double &Strike,
   if(testmode==true){printComplexArray(X,N_,"Raw X Vector");}
   }
 
-std::vector<Option> FFT::Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model) const {
+double FFT::Price(const double &Spot, const double &Strike, const double &C, const pricemodel &model) {
+  return Prices(Spot,Strike,C,model)[N_/2].premium;
+  }
+
+std::vector<Option> FFT::Prices(const double &Spot, const double &Strike, const double &C, const pricemodel &model) {
   double complex vals[N_];
   std::vector<Option> retvals;
   double lambda = Lambda();
