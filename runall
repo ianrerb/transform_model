@@ -1,0 +1,9 @@
+#!/bin/bash
+
+TRIALS=trials/*.trial
+echo Executing Batch Trials...
+for f in $TRIALS
+do
+  echo Executing $f...
+  ./main $f  
+done

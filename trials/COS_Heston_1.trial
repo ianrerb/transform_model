@@ -1,0 +1,39 @@
+<CONTRACT>
+  Type: put
+  Spot: 1300
+  Strike: 1000
+  Strike: 1050
+  Strike: 1100
+  Strike: 1150
+  Strike: 1200
+  Strike: 1250
+  Strike: 1300
+</CONTRACT>
+
+<MODEL>
+  name: Heston
+  sigma: .3
+  kappa: 1
+  theta: .25
+  rho: -0.8
+  init_vol: .1
+  rate: .0025
+  dividend: .0125
+  T: .25
+</MODEL>
+
+<ENGINE>
+  name: COS
+  N: 4
+  N: 8
+  N: 16
+  N: 32
+  N: 64
+  N: 128
+  N: 256
+
+  bound: -10 10
+  bound: -5 5
+  bound: -2 2
+  bound: -1 1
+</ENGINE>

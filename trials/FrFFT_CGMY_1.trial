@@ -1,0 +1,43 @@
+<CONTRACT>
+  Type: put
+  Spot: 1300
+  Strike: 1000
+  Strike: 1050
+  Strike: 1100
+  Strike: 1150
+  Strike: 1200
+  Strike: 1250
+  Strike: 1300
+</CONTRACT>
+
+<MODEL>
+  name: CGMY
+  C: 1.2
+  G: 6.5
+  M: 8.5
+  Y: .05
+  rate: .0025
+  dividend: .0125
+  T: .25
+</MODEL>
+
+<ENGINE>
+  name: FrFFT
+  N: 4
+  N: 8
+  N: 16
+  N: 32
+  N: 64
+  N: 128
+  N: 256
+
+  alpha: -1.5
+  alpha: -2.5
+  alpha: -3.5
+  alpha: -4.5
+  alpha: -5.5
+
+  eta: .25
+  lambda: .01
+
+</ENGINE>

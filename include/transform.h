@@ -50,7 +50,7 @@ class transform_base {//abc
     virtual ~FFT(){ }; 
     
     void Alpha(const double &val){ alpha = val; };
-    void Eta(const double &val){eta = val; };
+    virtual void Eta(const double &val){eta = val; };
     
     double Alpha() const { return alpha; };
     double Eta() const { return eta; };
@@ -78,6 +78,7 @@ class FrFFT : public FFT {
   ~FrFFT(){ };
   
   void Lambda(const double &l){ lambda = l; RefreshGamma(); };
+  void Eta(const double &val){ eta = val; RefreshGamma(); };
   double Lambda() const { return lambda; };
   double Gamma() const { return gamma; }
 

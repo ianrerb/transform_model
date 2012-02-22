@@ -32,8 +32,8 @@ COS.o : $(SRC)COS.cpp $(INC)transform.h
 	$(CPL) $(SRC)COS.cpp
 
 run :
-	./main 
+	./runall 
 
 .PHONY : clean
 clean :
-	-rm main $(OBJ) 
+	-rm main $(OBJ) ./results/* 
