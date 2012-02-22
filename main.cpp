@@ -208,21 +208,21 @@ void RunFFT(FFT &engine,
   engine.Eta(eta);
   
   for(vector<double>::iterator strike_it = Strikes.begin(); strike_it!=Strikes.end();strike_it++){
-    outfile<<"STRIKE: "<<*strike_it<<"\n Eta: "<<eta;
+    outfile<<"STRIKE,"<<*strike_it<<"\nEta,"<<eta;
   
-    outfile<<"\n Alpha:\t";
+    outfile<<"\nAlpha";
     
     for(vector<double>::iterator alpha_it = alpha.begin(); alpha_it!= alpha.end(); alpha_it++)
-      outfile<<*alpha_it<<"\t";
+      outfile<<",\t"<<*alpha_it;
    
     outfile<<endl;
      
     for(vector<unsigned int>::iterator size_it = size.begin(); size_it != size.end(); size_it++){
-      outfile<<*size_it<<":\t";
+      outfile<<*size_it<<"\t";
       for(vector<double>::iterator alpha_it = alpha.begin(); alpha_it!= alpha.end(); alpha_it++){
 	engine.N(*size_it);
 	engine.Alpha(*alpha_it);
-	outfile<<engine.Price(Spot,*strike_it,C,model)<<"\t";
+	outfile<<",\t"<<engine.Price(Spot,*strike_it,C,model);
 	}
       
       outfile<<endl;
@@ -250,21 +250,21 @@ void RunFrFFT(FrFFT &engine,
   engine.Lambda(lambda);
   
   for(vector<double>::iterator strike_it = Strikes.begin(); strike_it!=Strikes.end();strike_it++){
-    outfile<<"STRIKE: "<<*strike_it<<"\n Eta: "<<eta<<"\n Lambda: "<<lambda;
+    outfile<<"STRIKE,"<<*strike_it<<"\nEta,"<<eta<<"\nLambda,"<<lambda;
   
-    outfile<<"\n Alpha:\t";
+    outfile<<"\n Alpha";
     
     for(vector<double>::iterator alpha_it = alpha.begin(); alpha_it!= alpha.end(); alpha_it++)
-      outfile<<*alpha_it<<"\t";
+      outfile<<",\t"<<*alpha_it;
    
     outfile<<endl;
      
     for(vector<unsigned int>::iterator size_it = size.begin(); size_it != size.end(); size_it++){
-      outfile<<*size_it<<":\t";
+      outfile<<*size_it<<"\t";
       for(vector<double>::iterator alpha_it = alpha.begin(); alpha_it!= alpha.end(); alpha_it++){
 	engine.N(*size_it);
 	engine.Alpha(*alpha_it);
-	outfile<<engine.Price(Spot,*strike_it,C,model)<<"\t";
+	outfile<<",\t"<<engine.Price(Spot,*strike_it,C,model);
 	}
       
       outfile<<endl;
@@ -302,22 +302,22 @@ void RunCOS(COS &engine,
   bounds.push_back(temp);
    
   for(vector<double>::iterator strike_it = Strikes.begin(); strike_it!=Strikes.end();strike_it++){
-    outfile<<"STRIKE: "<<*strike_it;
+    outfile<<"STRIKE,"<<*strike_it;
   
-    outfile<<"\n bounds:\t";
+    outfile<<"\n bounds\t";
     
     for(vector<bound>::iterator bound_it = bounds.begin(); bound_it!= bounds.end(); bound_it++)
-      outfile<<"("<<bound_it->a<<bound_it->b<<")"<<"\t";
+      outfile<<","<<"("<<bound_it->a<<" : "<<bound_it->b<<")";
    
     outfile<<endl;
      
     for(vector<unsigned int>::iterator size_it = size.begin(); size_it != size.end(); size_it++){
-      outfile<<*size_it<<":\t";
+      outfile<<*size_it<<"\t";
       for(vector<bound>::iterator bound_it = bounds.begin(); bound_it!= bounds.end(); bound_it++){
 	engine.N(*size_it);
 	engine.LowerBound(bound_it->a);
 	engine.UpperBound(bound_it->b);
-	outfile<<engine.Price(Spot,*strike_it,C,model)<<"\t";
+	outfile<<",\t"<<engine.Price(Spot,*strike_it,C,model);
 	}
       
       outfile<<endl;

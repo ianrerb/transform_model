@@ -21,7 +21,7 @@
 </MODEL>
 
 <ENGINE>
-  name: COS
+  name: FrFFT
   N: 4
   N: 8
   N: 16
@@ -29,12 +29,12 @@
   N: 64
   N: 128
   N: 256
-  N: 512
-  N: 1024
-  N: 2048
-  N: 4096
+  
+  alpha: -1.25
+  alpha: -2
+  alpha: -5
+  alpha: -10
 
-  bound: -10 10
-  bound: -5 5
-  bound: -1 1
+  eta: .25
+  lambda: .001
 </ENGINE>

@@ -11,17 +11,19 @@
 </CONTRACT>
 
 <MODEL>
-  name: VarianceGamma
-  sigma: .25
-  nu: .35
-  theta: -.25
+  name: Heston
+  sigma: .3
+  kappa: 1
+  theta: .25
+  rho: -0.8
+  init_vol: .1
   rate: .0025
   dividend: .0125
   T: .25
 </MODEL>
 
 <ENGINE>
-  name: COS
+  name: FFT
   N: 4
   N: 8
   N: 16
@@ -34,7 +36,10 @@
   N: 2048
   N: 4096
 
-  bound: -10 10
-  bound: -5 5
-  bound: -1 1
+  alpha: -1.25
+  alpha: -2
+  alpha: -5
+  alpha: -10
+
+  eta: .1
 </ENGINE>

@@ -11,17 +11,18 @@
 </CONTRACT>
 
 <MODEL>
-  name: VarianceGamma
-  sigma: .25
-  nu: .35
-  theta: -.25
+  name: CGMY
+  C: 1.2
+  G: 6.5
+  M: 8.5
+  Y: .05
   rate: .0025
   dividend: .0125
   T: .25
 </MODEL>
 
 <ENGINE>
-  name: COS
+  name: FFT
   N: 4
   N: 8
   N: 16
@@ -34,7 +35,10 @@
   N: 2048
   N: 4096
 
-  bound: -10 10
-  bound: -5 5
-  bound: -1 1
+  alpha: -10
+  alpha: -20
+  alpha: -50
+  alpha: -100
+  
+  eta: .1
 </ENGINE>

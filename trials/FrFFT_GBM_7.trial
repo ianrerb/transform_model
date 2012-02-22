@@ -11,17 +11,15 @@
 </CONTRACT>
 
 <MODEL>
-  name: VarianceGamma
-  sigma: .25
-  nu: .35
-  theta: -.25
+  name: GBM
+  sigma: .35
   rate: .0025
   dividend: .0125
   T: .25
 </MODEL>
 
 <ENGINE>
-  name: COS
+  name: FrFFT
   N: 4
   N: 8
   N: 16
@@ -29,12 +27,11 @@
   N: 64
   N: 128
   N: 256
-  N: 512
-  N: 1024
-  N: 2048
-  N: 4096
 
-  bound: -10 10
-  bound: -5 5
-  bound: -1 1
+  alpha: -1.25
+  alpha: -2
+  alpha: -5
+
+  eta: 2 
+  lambda: .0001
 </ENGINE>
