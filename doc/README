@@ -1,0 +1,69 @@
+transform_model  
+Ian Erb ianrerb@gmail.com 
+
+All of this product's content was created by Ian Erb, with the exception of the sp_gamma.h file, which was created by Behzad Nouri.
+
+NOTE*** This product requires downloading and installing fftw plugin available at http://www.fftw.org/
+
+Installation Instructions:
+Extract the transform_model folder into your home directory
+Navigate inside the transform_model directory
+run 'make'
+
+RUNNING AN INSTANCE OF THE PRICING ENGINE:
+All inputs to the Model are specified in .trial files (format explained below) and placed in the trials/ directory 
+Run a single trial file <file_name> using the following command in the transform_model directory:
+
+./main trials/<file_name>
+
+The results are written to the transform_model/results/ directory in the file 
+<file_name>.out
+
+For instance, in the transform_model directory enter
+./main trials/FFT_GBM_1.trial
+
+The results would then be written to results/FFT_GBM_1.trial.out
+
+RUNNING BATCH FILES:
+Execute the command 'make run' in the transform_model directory to batch process all files in the inputs/ directory
+
+FORMATTING .input FILES:
+
+A .input file has markup-style formatting and contains 3 mandatory nodes: CONTRACT, MODEL, ENGINE
+The general layout of a .input file is: 
+
+<CONTRACT>
+  Type: { call, put }
+  Spot: { double }
+  Strike: { double }*
+</CONTRACT>
+
+<MODEL>
+  name: { GBM, VarianceGamma, Heston, CGMY }
+  rate: { double }
+  dividend: { double }
+  T: { double }
+
+  sigma: { double }?
+  kappa: { double }?
+  theta: { double }?
+  rho: { double }?
+  init_vol: { double numeric }?
+  nu: { double }?
+  C: { double }?
+  G: { double }?
+  M: { double }?
+  Y: { double }?
+</MODEL>
+
+<ENGINE>
+  name: { FFT, FrFFT, COS }
+  N: { unsigned int }*
+  alpha: { double }*
+  eta: { double }?
+  bound: { double double }*
+  lambda: { double }*
+</ENGINE>
+
+Each file may contain more specifications than necessary for a 
+given Engine or Model Type, and the added specs will not affect the model.
